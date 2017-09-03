@@ -9,8 +9,9 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 @Configuration
 public class ApiConfig {
 	
-	@Bean
 	public ObjectMapper objectMapper() {
+		ObjectMapper objectMapper = new ObjectMapper();
+		
 		return new ObjectMapper();
 	}
 	

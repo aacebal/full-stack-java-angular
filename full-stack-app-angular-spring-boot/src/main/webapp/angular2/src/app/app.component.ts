@@ -24,6 +24,10 @@ export class AppComponent implements OnInit {
   onSubmit({value, valid}: {value: RoomSearch, valid: boolean}) {
     console.log(value);
   }
+
+  reserveRoom(value:string) {
+    console.log("Room id for reservation: " + value);
+  }
 }
 
 export interface RoomSearch {

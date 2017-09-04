@@ -70,7 +70,7 @@
                     <strong>Price: ${{room.price}}</strong>
                   </td>
                   <td>
-                    <button type="submit" name="button" class="btn btn-primary">Reserve</button>
+                    <button type="submit" name="button" class="btn btn-primary" (click)="reserveRoom(room.id)">Reserve</button>
                   </td>
                 </tr>
               </tbody>

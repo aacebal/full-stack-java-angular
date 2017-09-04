@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface RoomRepository extends CrudRepository<RoomEntity, Long>{
 
-    List<RoomEntity> finById(Long id)
+    List<RoomEntity> finById(Long id);
 }

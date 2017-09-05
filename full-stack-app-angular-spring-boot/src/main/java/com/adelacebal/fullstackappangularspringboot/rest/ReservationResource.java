@@ -46,9 +46,9 @@ public class ReservationResource {
 	        @PathVariable
             Long roomId) {
 
-	    roomRepository.findById(roomId);
+	    RoomEntity roomEntity = roomRepository.findById(roomId);
 
-	    return null;
+	    return new ResponseEntity<>(roomEntity, HttpStatus.OK);
     }
 	
 	@RequestMapping(path = "", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE, 

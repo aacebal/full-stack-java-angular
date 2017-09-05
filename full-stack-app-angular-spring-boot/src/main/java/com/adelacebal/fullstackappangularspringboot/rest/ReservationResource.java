@@ -1,7 +1,13 @@
 package com.adelacebal.fullstackappangularspringboot.rest;
 
+import com.adelacebal.fullstackappangularspringboot.convertor.RoomEntityToReservationResponseConverter;
+import com.adelacebal.fullstackappangularspringboot.entity.RoomEntity;
 import com.adelacebal.fullstackappangularspringboot.model.request.ReservationRequest;
 import com.adelacebal.fullstackappangularspringboot.model.response.ReservationResponse;
+import com.adelacebal.fullstackappangularspringboot.repository.PageableRoomRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -13,17 +19,22 @@ import java.time.LocalDate;
 @RestController
 @RequestMapping(ResourceConstants.ROOM_RESERVATION_V1)
 public class ReservationResource {
-	
+
+	@Autowired
+	PageableRoomRepository pageableRoomRepository;
+
 	@RequestMapping(path = "", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public ResponseEntity<ReservationResponse> getAvailableRooms(
+	public Page<ReservationResponse> getAvailableRooms(
 			@RequestParam(value = "checkin")
 			@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
 			LocalDate checkin, 
 			@RequestParam(value = "checkout")
 			@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-			LocalDate checkout) {
+			LocalDate checkout, Pageable pageable) {
+
+		Page<RoomEntity> roomEntityList = pageableRoomRepository.findAll(pageable);
 		
-		return new ResponseEntity<>(new ReservationResponse(), HttpStatus.OK);
+		return roomEntityList.map(new RoomEntityToReservationResponseConverter());
 	}
 	
 	@RequestMapping(path = "", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE, 

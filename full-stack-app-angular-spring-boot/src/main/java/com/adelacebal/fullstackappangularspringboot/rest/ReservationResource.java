@@ -5,6 +5,7 @@ import com.adelacebal.fullstackappangularspringboot.entity.RoomEntity;
 import com.adelacebal.fullstackappangularspringboot.model.request.ReservationRequest;
 import com.adelacebal.fullstackappangularspringboot.model.response.ReservationResponse;
 import com.adelacebal.fullstackappangularspringboot.repository.PageableRoomRepository;
+import com.adelacebal.fullstackappangularspringboot.repository.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,6 +24,9 @@ public class ReservationResource {
 	@Autowired
 	PageableRoomRepository pageableRoomRepository;
 
+	@Autowired
+	RoomRepository roomRepository;
+
 	@RequestMapping(path = "", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public Page<ReservationResponse> getAvailableRooms(
 			@RequestParam(value = "checkin")
@@ -36,6 +40,16 @@ public class ReservationResource {
 		
 		return roomEntityList.map(new RoomEntityToReservationResponseConverter());
 	}
+
+	@RequestMapping(path = "/{roomId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public ResponseEntity<RoomEntity> getRoomById(
+	        @PathVariable
+            Long roomId) {
+
+	    roomRepository.findById(roomId);
+
+	    return null;
+    }
 	
 	@RequestMapping(path = "", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE, 
 			consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
